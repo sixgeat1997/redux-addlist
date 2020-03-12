@@ -1,8 +1,6 @@
 import React from "react";
 import "./InputForm.css";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { allAction } from "../redux/store";
 import { bindActionCreators } from "redux";
 import { bearActions } from "../redux/store";
 
@@ -12,7 +10,6 @@ const InputForm = props => {
 
     const form = useSelector(state => state.form);
     const bears = useSelector(state => state.bear);
-    const actions = bindActionCreators(allAction, useDispatch());
     const bearAction = bindActionCreators(bearActions, useDispatch());
     const dispatch = useDispatch();
 
@@ -40,7 +37,7 @@ const InputForm = props => {
                                 className="inpt"
                                 type="text"
                                 onChange={e =>
-                                    actions.change_name(e.target.value)
+                                    bearAction.change_name(e.target.value)
                                 }
                             />
                         </td>
@@ -52,7 +49,7 @@ const InputForm = props => {
                                 className="inpt"
                                 type="number"
                                 onChange={e =>
-                                    actions.change_weight(e.target.value)
+                                    bearAction.change_weight(e.target.value)
                                 }
                             />
                         </td>
@@ -64,7 +61,7 @@ const InputForm = props => {
                                 className="inpt"
                                 type="text"
                                 onChange={e =>
-                                    actions.change_img(e.target.value)
+                                    bearAction.change_img(e.target.value)
                                 }
                             />{" "}
                             <br />

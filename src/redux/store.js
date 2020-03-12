@@ -20,31 +20,31 @@ export const bearActions = {
     },
     AddBear: (bears) => async (dispatch) => {
         const result = await axios.post(`http://localhost/api/bears/`, bears);
-        console.log(bears.id);
-
+        console.log(bears);
         dispatch({ type: 'ADD_BEARS', bear: bears })
     },
     deleteBear: (b) => async (dispatch) => {
         const result = await axios.delete(`http://localhost/api/bears/${b.id}`)
-        console.log(b.id);
-
+        console.log(b);
         dispatch({ type: 'DELETE_BEARS', id: b.id })
     },
     updateBear: (b) => async (dispatch) => {
         const result = await axios.put(`http://localhost/api/bears/${b.id}`, b)
         dispatch({ type: 'UPDATE_BEARS', bear: b, id: b.id })
-    }
-
-
-
-
-}
-
-export const allAction = {
-    change_weight: (w) => ({ type: 'CHANGE_WEIGHT', weight: w }),
+    },
+    change_weight: (w) => (dispatch) => {
+        dispatch({ type: 'CHANGE_WEIGHT', weight: w })
+    },
     change_name: (n) => ({ type: 'CHANGE_NAME', name: n }),
     change_img: (i) => ({ type: 'CHANGE_IMG', img: i }),
+
+
+
 }
+
+// export const allAction = {
+
+// }
 
 const formReducer = (data = initform, action) => {
     switch (action.type) {
