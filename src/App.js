@@ -1,14 +1,31 @@
-import React, { useState, useEffect } from 'react'
-import BearList from './components/BearList'
-import InputForm from './components/InputForm';
+import React, { useEffect } from "react";
+import Psulogin from "./components/PsuLogin";
+import { Switch, Route, Link } from 'react-router-dom'
+import Bears from './components/Bears'
 
 
-export default () => {
+function mains(props) {
+  // useEffect(() => {
+  //   props.history.push("/api/")
+  // }, [])
   return (
-    <div>
-      <h2>Bears</h2>
-      <BearList />
-      <InputForm />
-    </div>
+    <>
+      <Link to="/api/" component={Psulogin} ></Link>
+      123
+    </>
   )
 }
+export default () => {
+
+
+
+  return (
+    <div>
+      <Switch>
+        <Route exact path="/" component={mains} />
+        <Route exact path="/api/" component={Psulogin} />
+        <Route path="/api/bears" component={Bears} />
+      </Switch>
+    </div>
+  );
+};

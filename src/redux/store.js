@@ -3,6 +3,9 @@ import thunk from 'redux-thunk'
 import axios from "axios";
 import logger from 'redux-logger';
 
+const loginForm = [{
+    id: ''
+}]
 
 const initform = [{
     name: '',
@@ -19,17 +22,17 @@ export const bearActions = {
         dispatch({ type: "GET_BEARS", bears: responseBody });
     },
     AddBear: (bears) => async (dispatch) => {
-        const result = await axios.post(`http://localhost/api/bears/`, bears);
+        await axios.post(`http://localhost/api/bears/`, bears);
         console.log(bears);
         dispatch({ type: 'ADD_BEARS', bear: bears })
     },
     deleteBear: (b) => async (dispatch) => {
-        const result = await axios.delete(`http://localhost/api/bears/${b.id}`)
+        await axios.delete(`http://localhost/api/bears/${b.id}`)
         console.log(b);
         dispatch({ type: 'DELETE_BEARS', id: b.id })
     },
     updateBear: (b) => async (dispatch) => {
-        const result = await axios.put(`http://localhost/api/bears/${b.id}`, b)
+        await axios.put(`http://localhost/api/bears/${b.id}`, b)
         dispatch({ type: 'UPDATE_BEARS', bear: b, id: b.id })
     },
     change_weight: (w) => (dispatch) => {
@@ -39,12 +42,34 @@ export const bearActions = {
     change_img: (i) => ({ type: 'CHANGE_IMG', img: i }),
 
 
+    loginPsu: (login) => async (dispatch) => {
+        const result = await axios.post(`http://localhost/api/`, {...login});
+        console.log(result.data.GetUserDetailsResult.string[0]);
+        dispatch({ type: 'LOGIN', id: result.data.GetUserDetailsResult.string[0] })
+
+    },
+    logoutPsu : () => ({type : "LOGOUT"})
 
 }
 
-// export const allAction = {
+const loginReducer = (data = loginForm, action) => {
+    
+    
+    switch (action.type) {
+        case "LOGIN":
+            return {
+                ...data,
+                id: action.id
+            }
+        case "LOGOUT":
+            return {
+                ...data,
+                id: ""
+            }
+    }
+    return data
+}
 
-// }
 
 const formReducer = (data = initform, action) => {
     switch (action.type) {
@@ -93,7 +118,9 @@ const bearReducer = (bears = [], action) => {
 
 const rootReducer = combineReducers({
     bear: bearReducer,
-    form: formReducer
+    form: formReducer,
+    psuPass: loginReducer,
+
 })
 
 const store = createStore(rootReducer, applyMiddleware(logger, thunk))

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import BearCard from "./BearCard";
-import axios from "axios";
+// import axios from "axios";
 import "./BearList.css";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
